@@ -41,32 +41,26 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $server_output = curl_exec($ch);
 curl_close ($ch);
 echo $server_output;
+//echo 'Aprovado'
 // Further processing ...
 //if ($server_output == "OK") { ... } else { ... };
 }
 ?>
-
-<form method="post">
-    <p>
-        <form method="post">
+O Usuário <?php echo $_GET['usuario']; ?>  esta solicitando a execução de um script, se encontra no seu e-mail para avaliação.
+<form  method="post">
+<p>
+<button id="button" name="button" class="btn btn-primary btn-lg">
+Aprovar
+</button>
+</p>
+</form>
+<!--
+<form action="script.html" method="post">
     <p>
         <button name="button" style="background-color:#556270;border:1px solid #000000;border-radius:8px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:50px;font-weight:bold;line-height:80px;text-align:center;text-decoration:none;width:400px;-webkit-text-size-adjust:none;mso-hide:all;"  >Aprovar</button>
     </p>
-    </form>
-    <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			 
-			<button type="button" class="btn btn-primary btn-lg">
-				Button
-			</button>
-			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-			</p>
-		</div>
-	</div>
-</div>
-
+</form>
+-->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
