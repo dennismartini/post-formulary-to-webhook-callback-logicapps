@@ -1,0 +1,67 @@
+/*********************************************************************************
+
+	Data: 
+	Responsável: 
+	Motivo:  
+	Horário que deve ser aplicado: 
+
+*********************************************************************************/
+PRINT '- YYYYMMDD_DatabaseAfetado'
+PRINT '- Servidor: ' + @@servername
+PRINT '- Banco: ' + db_name()
+PRINT '- Data: ' + CONVERT(VARCHAR(23), GETDATE(), 121)
+PRINT ''
+GO
+
+SET NOEXEC OFF;
+
+IF @@Servername <> 'pro-evup' -- Informar o nome do servidor
+BEGIN
+	PRINT 'Execução em servidor incorreto. Abortando...'
+	SET NOEXEC ON;
+	RETURN;
+END
+
+
+IF DB_NAME() <> 'DatabaseAfetado' -- Informar o nome do database
+BEGIN
+	PRINT 'Execução em database incorreto. Abortando...'
+	SET NOEXEC ON;
+	RETURN;
+END
+
+/****************************************************************************************************************************************
+	Caso as instruções forem independentes, ou seja, cada uma pode ser confirmada sozinha mesmo que a outra dê erro, repetir o bloco 
+	BEGIN TRANSACTION.. BEGIN TRY... até o END CATCH...  para cada instrução:
+******************************************************************************************************************************************/
+
+DECLARE @ConfirmarTransacao BIT = 0
+
+-- Comando 1
+BEGIN TRANSACTION
+BEGIN TRY
+BEGIN
+
+
+-- Seu comando de Insert/Update/Delete lembrando sempre da condição WHERE
+-- Inclua "PRINT @@ROWCOUNT" ao final de cada Insert/Update/Delete para explicitar a quantidade de linhas afetadas
+	PRINT 'Alterado com sucesso!'
+	COMMIT TRANSACTION
+
+END
+END TRY
+BEGIN CATCH
+BEGIN
+    PRINT 'Ocorreu um erro. Detalhes: '
+    PRINT ERROR_MESSAGE()
+    ROLLBACK TRANSACTION
+END
+END CATCH
+
+
+IF @@TRANCOUNT <> 0
+BEGIN
+	PRINT 'Algo deve ter saído errado, pois temos transações abertas. Efetuando Rollback. Favor verificar.'
+	ROLLBACK TRANSACTION
+END
+GO
